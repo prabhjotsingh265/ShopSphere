@@ -1,0 +1,14 @@
+# ---- Base image: Node 24 (matches local Node version), Alpine-based ----
+FROM node:24-alpine
+
+WORKDIR /app
+
+# ---- Install dependencies first, separately from the rest of the code (layer caching) ----
+COPY package.json package-lock.json ./
+RUN npm install
+
+# ---- Vite's dev server default port ----
+EXPOSE 5173
+
+# ---- --host so the dev server accepts connections from outside the container, not just localhost ----
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
