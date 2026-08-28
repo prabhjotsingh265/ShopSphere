@@ -1,0 +1,73 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: shopsphere-backend:dev
+    container_name: backend
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+    networks:
+      - shopsphere-net
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:stable
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend/public:/var/www/html/public:ro
+      - ./backend/docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - shopsphere-net
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  mysql:
+    image: mysql:8.4
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: shopsphere
+      MYSQL_USER: shopsphere
+      MYSQL_PASSWORD: devpassword123
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - shopsphere-mysql-data:/var/lib/mysql
+    networks:
+      - shopsphere-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpass123"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    image: shopsphere-frontend:dev
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - shopsphere-net
+    restart: unless-stopped
+
+networks:
+  shopsphere-net:
+    driver: bridge
+
+volumes:
+  shopsphere-mysql-data:
