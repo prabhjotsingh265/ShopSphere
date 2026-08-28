@@ -597,8 +597,56 @@ DB credentials (local dev only, not for anything real): database `shopsphere`, u
 
 ---
 
-## 15. Still to come (this section grows as we go)
+## 15. Daily development workflow — writing actual backend code
 
-- **Phase 5:** More daily dev workflow details as they come up (queue workers, scheduled
-  tasks, seeding, etc.)
+**The code itself doesn't change.** Controllers, models, migrations — all written exactly
+like normal Laravel. The only difference: **PHP, Composer, and `artisan` don't exist on
+this Mac for this project anymore — they only exist inside the `backend` container.** Your
+code lives on your Mac (the live-mount from §12 takes care of that), but the tools that
+*run* it live inside Docker. The habit: prefix artisan/composer commands with
+`docker compose exec backend`.
+
+Concrete example — adding a `products` table:
+
+```bash
+docker compose exec backend php artisan make:migration create_products_table
+docker compose exec backend php artisan make:model Product
+docker compose exec backend php artisan make:controller ProductController --resource
+docker compose exec backend php artisan make:seeder ProductSeeder
+```
+
+Every one of these **writes real files into `backend/app/...` / `backend/database/...` on
+the actual Mac** (thanks to the live-mount) — open them in VS Code immediately, edit
+completely normally (columns in the migration, relationships in the model, logic in the
+controller). Editing itself is identical to non-Docker Laravel work.
+
+Then to apply it:
+```bash
+docker compose exec backend php artisan migrate
+docker compose exec backend php artisan db:seed --class=ProductSeeder
+```
+
+**Why some commands need the container more than others:**
+- `make:migration` / `make:model` / `make:controller` / `make:seeder` — just generate PHP
+  files. No environment-specific work happens; these would technically also work run via
+  Herd's PHP directly. Still worth running the same way for consistency.
+- `migrate` / `db:seed` / `tinker` (when it touches the DB) — these **actually connect to
+  MySQL**, and only the `backend` container can resolve `mysql` as a hostname (that only
+  exists on our Docker network, `shopsphere_shopsphere-net`). Herd's PHP on the Mac has no
+  route to it at all — these commands genuinely only work through the container.
+
+**No rebuild is ever needed for this kind of work.** Rebuilds (`docker compose up --build`)
+are only for changes to `Dockerfile` or `composer.json`'s dependency list — writing
+app code touches neither.
+
+Optional convenience: shorten the prefix with a shell alias —
+`alias art='docker compose exec backend php artisan'` in `~/.zshrc` — so it's just
+`art make:model Product`.
+
+---
+
+## 16. Still to come (this section grows as we go)
+
+- **Phase 5 (continued):** More daily dev workflow details as they come up (queue workers,
+  scheduled tasks, `tinker`, etc.)
 - **Phase 6/7:** CI/CD with GitHub Actions — build and push these images automatically
