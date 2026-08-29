@@ -372,6 +372,34 @@ container what it needs.
 *Fix:* mapped to host port `3307` instead — irrelevant to the app itself, which never
 reaches MySQL through the host port anyway, only through the Docker network.
 
+**Problem: uploaded product images returned `403 Forbidden` (e.g.
+`/storage/images/products/xyz.webp`), and so didn't show on the products page** —
+*Cause:* `php artisan storage:link` creates `public/storage` as a symlink to
+`/var/www/html/storage/app/public` — an **absolute path**, meaningful only inside the
+`backend` container, which has the whole `backend/` folder mounted. `nginx` only had
+`backend/public/` mounted (§8) — never `backend/storage/` — so from nginx's filesystem
+view, that symlink pointed at a path that simply doesn't exist there. Nginx can see the
+symlink itself (it's inside the mounted `public/`) but can't follow it anywhere, hence
+`403` rather than `404`.
+*Fix:* gave `nginx` direct, explicit access to the real files instead of depending on a
+symlink whose target only resolves inside a different container:
+```yaml
+# docker-compose.yml, nginx service
+volumes:
+  - ./backend/storage/app/public:/var/www/html/storage/app/public:ro
+```
+```nginx
+# backend/docker/nginx.conf
+location ^~ /storage/ {
+    alias /var/www/html/storage/app/public/;
+}
+```
+`^~` tells nginx "once this prefix matches, stop — don't also check the regex locations
+below it" (our `\.php$` and hidden-file-deny blocks), which is both a minor optimization
+and insurance against a future regex accidentally matching something under `/storage/`.
+The `storage:link` symlink itself is left in place — still correct and standard practice
+for the `backend` container's own use — this just stops `nginx` from depending on it.
+
 ---
 
 ## 11. Frontend Dockerization — two genuinely different Dockerfiles
