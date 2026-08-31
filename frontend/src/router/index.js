@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory} from "vue-router"
+import { createRouter, createWebHistory} from "vue-router"
 import { useAuthStore } from "../stores/useAuthStore"
 const Home = () => import('../components/Home.vue')
 const Register = () => import('../components/auth/Register.vue')
@@ -24,7 +24,7 @@ function checkIfUserIsNotLoggedIn() {
 }
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history: createWebHistory(),
     routes: [
         {
             path: '/',
