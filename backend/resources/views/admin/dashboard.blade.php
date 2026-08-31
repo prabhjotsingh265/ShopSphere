@@ -72,6 +72,24 @@
                         </div>
                     </a>
                 </div>
+                <div class="col-md-4">
+                    <a href="{{route('admin.orders.index')}}" class="text-decoration-none">
+                        <div class="ss-stat-card" style="--accent: var(--emerald); --accent-ink:#fff;">
+                            <div class="stat-icon"><i class="fas fa-cart-shopping"></i></div>
+                            <div class="stat-label">Fulfillment</div>
+                            <div class="stat-sub" style="font-size:.95rem;color:var(--ink);font-weight:600;margin-top:4px;">Manage Orders &rarr;</div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="{{route('admin.users.index')}}" class="text-decoration-none">
+                        <div class="ss-stat-card" style="--accent: var(--amber); --accent-ink:#2E2306;">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-label">Customers</div>
+                            <div class="stat-sub" style="font-size:.95rem;color:var(--ink);font-weight:600;margin-top:4px;">Manage Users &rarr;</div>
+                        </div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

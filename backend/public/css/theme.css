@@ -143,6 +143,11 @@ a:hover { color: var(--brass-ink); }
 .ss-sidebar {
   background: var(--pine);
   border-color: var(--pine-dark) !important;
+  /* Full viewport height regardless of how short the page content is -
+     Bootstrap's row is already a flexbox (align-items: stretch), which
+     matches the sidebar to *content* height when content is taller, but
+     does nothing when content is shorter than the viewport. */
+  min-height: calc(100vh - 56px);
 }
 .ss-link {
   display: flex;
