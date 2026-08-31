@@ -5,7 +5,6 @@ import 'bootstrap-icons/font/bootstrap-icons.min.css'
 import 'vue-loading-overlay/dist/css/index.css'
 import 'vue-image-zoomer/dist/style.css'
 import "vue-toastification/dist/index.css"
-import './assets/main.css'
 import App from './App.vue'
 import router from './router'
 import { createPinia } from 'pinia'
