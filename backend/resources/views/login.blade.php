@@ -4,12 +4,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>ShopSphere Admin Login</title>
+        <link rel="icon" type="image/svg+xml" href="{{asset('favicon.svg')}}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+        <link href="{{asset('css/theme.css')}}" rel="stylesheet">
     </head>
-    <body class="bg-light">
+    <body>
         <div class="container">
             <div class="row my-5">
                 <div class="col-md-6 mx-auto">
+                    <div class="text-center mb-4">
+                        @include('admin.layouts.logo', ['size' => 44])
+                    </div>
                     @session('error')
                         <div class="alert alert-danger my-2">
                             {{ session('error') }}
