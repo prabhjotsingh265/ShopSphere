@@ -1,13 +1,11 @@
 <template>
     <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-header bg-white">
-                <h5 class="text-center my-2">
-                    {{ updatingProfile ? "User Details" : "Billing Details"}}
-                </h5>
+        <div class="ss-content-card">
+            <div class="ss-card-head">
+                {{ updatingProfile ? "User Details" : "Billing Details"}}
             </div>
-            <div class="card-body">
-                <form class="mt-5" @submit.prevent="updateUserInfos">
+            <div class="ss-card-body">
+                <form @submit.prevent="updateUserInfos">
                     <div class="mb-3">
                         <label for="phone_number" class="form-label">Phone Number*</label>
                         <input
@@ -77,9 +75,9 @@
                         <button
                             v-if="!authStore.user?.profile_completed || updatingProfile"
                             type="submit"
-                            class="btn btn-sm btn-dark rounded-0"
+                            class="btn btn-dark"
                         >
-                            Submit
+                            Save Details
                         </button>
                     </div>
                 </form>
@@ -95,7 +93,7 @@
     import { BASE_URL, headersConfig } from "../../helpers/config";
     import { useAuthStore } from "../../stores/useAuthStore";
 
-    //define the data object 
+    //define the data object
     const data = reactive({
         userCurrentInfo: {
             phone_number: '',
@@ -106,7 +104,7 @@
         }
     })
 
-    //define the props 
+    //define the props
     const props = defineProps({
         updatingProfile: {
             type: Boolean,
@@ -123,7 +121,7 @@
 
     //define the update user info function
     const updateUserInfos = async () => {
-        authStore.isLoading = true 
+        authStore.isLoading = true
 
         const userData = {
             phone_number: data.userCurrentInfo.phone_number,

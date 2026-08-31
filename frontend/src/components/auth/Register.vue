@@ -2,18 +2,22 @@
     <div class="row my-5">
         <!-- here the spinner -->
         <Spinner :store="authStore" />
-        <div class="col-md-6 mx-auto">
+        <div class="col-md-5 mx-auto">
+            <div class="text-center mb-4">
+                <Logo :size="52" />
+            </div>
             <!-- render validation errors -->
-            <RenderValidationErrors 
+            <RenderValidationErrors
                 :formValidationErrors="authStore.validationErrors"
             />
-            <div class="card rounded-0 shadow-sm">
-                <div class="card-header bg-white">
-                    <h5 class="text-center mt-2">
-                        Register
+            <div class="ss-auth-card">
+                <div class="text-center mb-4">
+                    <h5 class="m-0">
+                        Create your account
                     </h5>
+                    <p class="text-muted small mb-0">Join ShopSphere in seconds</p>
                 </div>
-                <div class="card-body">
+                <div>
                     <form @submit.prevent="registerNewUser">
                         <div class="mb-3">
                             <label for="name" class="form-label">Name*</label>
@@ -54,13 +58,16 @@
                         <div class="mb-3">
                             <button
                                 type="submit"
-                                class="btn btn-sm btn-dark rounded-0"
+                                class="btn btn-dark w-100"
                             >
-                                Submit
+                                Create Account
                             </button>
                         </div>
                     </form>
                 </div>
+                <p class="text-center text-muted small mt-3 mb-0">
+                    Already have an account? <router-link to="/login" style="color: var(--brass-dark)">Login</router-link>
+                </p>
             </div>
         </div>
     </div>
@@ -75,6 +82,7 @@
     import { useAuthStore } from "../../stores/useAuthStore"
     import Spinner from "../layouts/Spinner.vue"
     import RenderValidationErrors from "../layouts/RenderValidationErrors.vue"
+    import Logo from "../layouts/Logo.vue"
 
     //define the store
     const authStore = useAuthStore()

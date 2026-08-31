@@ -1,71 +1,63 @@
 <template>
-    <div class="row my-3">
+    <div class="row my-4">
+        <div class="ss-page-title">Checkout</div>
         <UpdateUserInfos :updatingProfile="false" />
         <div class="col-md-4">
             <Coupon />
-            <ul class="list-group">
-                <li class="list-group-item d-flex"
-                    v-for="product in cartStore.cartItems"
-                    :key="product.ref"
-                >
-                    <img :src="product.image" 
-                        width="60" 
-                        height="60"
-                        class="img-fluid rounded me-2"
-                        :alt="product.name"    
+            <div class="ss-content-card mb-3">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex"
+                        v-for="product in cartStore.cartItems"
+                        :key="product.ref"
                     >
-                    <div class="d-flex flex-column">
-                        <h6 class="my-1">
-                            <strong>{{ product.name }}</strong>
-                        </h6>
-                        <span class="text-muted">
-                            <strong>Color: {{ product.color }}</strong>
+                        <img :src="product.image"
+                            width="56"
+                            height="56"
+                            class="img-fluid rounded me-2"
+                            :alt="product.name"
+                        >
+                        <div class="d-flex flex-column">
+                            <span class="fw-semibold small">{{ product.name }}</span>
+                            <span class="text-muted small">
+                                {{ product.color }} / {{ product.size }}
+                            </span>
+                        </div>
+                        <div class="d-flex flex-column ms-auto text-end">
+                            <span class="text-muted small mono">
+                                ${{ product.price }} &times; {{ product.qty }}
+                            </span>
+                            <span class="fw-bold mono">
+                                ${{ product.price * product.qty }}
+                            </span>
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="fw-semibold small">
+                            Discount ({{ cartStore.validCoupon.discount }}%)
                         </span>
-                        <span class="text-muted">
-                            <strong>Size: {{ product.size }}</strong>
+                        <span class="small" style="color: var(--rust)"
+                            v-if="cartStore.validCoupon?.name">
+                            {{ cartStore.validCoupon.name }}
+                            <i class="bi bi-trash ms-1"
+                                :style="{ cursor: 'pointer' }"
+                                @click="removeCoupon"
+                            ></i>
                         </span>
-                    </div>
-                    <div class="d-flex flex-column ms-auto">
-                        <span class="text-muted">
-                            ${{ product.price }} <i>x</i> {{ product.qty }}
+                        <span class="fw-bold mono" style="color: var(--rust)">
+                            -${{ calculatedDiscount() }}
                         </span>
-                        <span class="text-muted fw-bold">
-                            ${{ product.price * product.qty }}
-                        </span>
-                    </div>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span class="fw-bold">
-                        Discount ({{ cartStore.validCoupon.discount }})%
-                    </span>
-                    <span class="fw-normal text-danger"
-                        v-if="cartStore.validCoupon?.name">
-                        {{ cartStore.validCoupon.name }}
-                        <i class="bi bi-trash"
-                            :style="{
-                                cursor: 'pointer'
-                            }"
-                            @click="removeCoupon"
-                        ></i>
-                    </span>
-                    <span class="fw-bold text-danger">
-                        -${{ calculatedDiscount() }}
-                    </span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span class="fw-bold">
-                        Total
-                    </span>
-                    <span class="fw-bold text-danger">
-                        ${{ finalTotal() }}
-                    </span>
-                </li>
-            </ul>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center" style="background: var(--bg)">
+                        <span class="fw-bold">Total</span>
+                        <span class="fw-bold mono" style="font-size: 1.2rem; color: var(--rust)">${{ finalTotal() }}</span>
+                    </li>
+                </ul>
+            </div>
             <div class="my-3">
-                <Stripe 
+                <Stripe
                     v-if="authStore.user?.profile_completed"
                 />
-                <Alert v-else 
+                <Alert v-else
                     content="Add your billing details"
                     bgColor="warning"
                 />
@@ -84,7 +76,7 @@
     import Alert from "../layouts/Alert.vue"
     import Coupon from "../coupons/Coupon.vue"
     import Stripe from "../payment/Stripe.vue"
-    
+
     //define the stores
     const cartStore = useCartStore()
     const authStore = useAuthStore()
@@ -97,11 +89,11 @@
 
     //calculate the cart total
     const totalOfCartItems = cartStore.cartItems.reduce((acc,item) => acc += item.price * item.qty,0)
-    
+
     //calculate the discount
     const calculatedDiscount = () => totalOfCartItems * cartStore.validCoupon.discount / 100
 
-    //calculate the final total 
+    //calculate the final total
     const finalTotal = () => totalOfCartItems - calculatedDiscount()
 
     //remove coupon function

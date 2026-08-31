@@ -1,16 +1,13 @@
 <template>
     <div class="row">
-        <div class="d-flex">
-            <div class="mb-3">
-                Found
-                <span class="fw-bold">{{ productsStore.products.length }}</span>
+        <div class="d-flex align-items-center flex-wrap ss-list-heading mb-3">
+            <span class="count-pill">
+                {{ productsStore.products.length }}
                 {{ productsStore.products.length > 1 ? "products" : "product"}}
-            </div>
-            <div class="ms-1" v-if="productsStore.filter">
-                for <span class="fw-bold">
-                    {{ productsStore.filter.param }} {{ productsStore.filter.value }}
-                </span>
-            </div>
+            </span>
+            <span class="ms-2 text-muted" v-if="productsStore.filter">
+                for <strong>{{ productsStore.filter.param }} {{ productsStore.filter.value }}</strong>
+            </span>
         </div>
         <ProductListItem 
             v-for="product in productsStore.products.slice(0,data.productsToShow)"

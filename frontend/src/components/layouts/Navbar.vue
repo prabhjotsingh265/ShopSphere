@@ -1,13 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-lg ss-navbar">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">
-        <img
-          src="https://cdn.pixabay.com/photo/2014/04/02/11/16/shopping-305728_1280.png"
-          alt="Logo"
-          width="60"
-          height="60"
-        />
+      <router-link class="navbar-brand ss-brand" to="/">
+        <Logo :size="34" />
+        <span>ShopSphere</span>
       </router-link>
       <button
         class="navbar-toggler"
@@ -105,6 +101,7 @@ import { onMounted } from "vue"
   import { useAuthStore } from "../../stores/useAuthStore"
   import { useCartStore } from "../../stores/useCartStore"
   import { useFavoritesStore } from "../../stores/useFavoritesStore"
+  import Logo from "./Logo.vue"
 
   //define the cart store
   const cartStore = useCartStore()
@@ -157,5 +154,23 @@ import { onMounted } from "vue"
   .navbar a {
     font-size: 1.1rem;
     font-weight: 700;
+  }
+  .ss-navbar {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--line);
+    padding-top: .85rem;
+    padding-bottom: .85rem;
+  }
+  .ss-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink) !important;
+  }
+  .ss-brand span {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    letter-spacing: .01em;
   }
 </style>

@@ -1,10 +1,12 @@
 <template>
     <div class="col-md-6">
-        <div class="card mb-2" style="max-width: 320px">
-            <img :src="product.thumbnail" class="card-img-top" 
-                :alt="product.name" height="279">
+        <div class="card ss-product-card mb-2" style="max-width: 320px">
+            <div class="ss-product-img">
+                <img :src="product.thumbnail" class="card-img-top"
+                    :alt="product.name" height="279">
+            </div>
             <div class="card-body">
-                <router-link class="text-decoration-none text-dark"
+                <router-link class="text-decoration-none ss-product-title"
                     :to="`/product/${product.slug}`">
                     <h5 class="card-title">{{ product.name }}</h5>
                 </router-link>
@@ -80,6 +82,25 @@
     //calculate the average reviews of the product
     const reviewAvg = computed(() => props.product.reviews.reduce((acc,review) => acc + review.rating / props.product.reviews.length,0))
 </script>
+
+<style scoped>
+.ss-product-img {
+    background: var(--bg, #EEF0E8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.ss-product-img img { object-fit: cover; width: 100%; }
+.ss-product-title { color: var(--ink, #14241C); }
+.ss-product-title:hover { color: var(--brass-dark, #A87A1F); }
+.ss-product-card .card-title {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+}
+</style>
 
 <style scoped>
 </style>

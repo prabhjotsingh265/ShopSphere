@@ -1,0 +1,272 @@
+/* ShopSphere design system — pine/brass palette, applied over Bootstrap 5.3
+   via its component-scoped CSS variables (--bs-btn-*, --bs-*-rgb), since
+   Bootstrap's own utility/badge classes read from root variables but its
+   .btn-* variants hardcode their own colors and need direct overrides. */
+
+:root {
+  --bg: #EEF0E8;
+  --surface: #FFFFFF;
+  --ink: #14241C;
+  --ink-soft: #46564C;
+  --line: #D8DACD;
+
+  --pine: #1B3A2B;
+  --pine-dark: #12281D;
+  --brass: #C9922B;
+  --brass-dark: #A87A1F;
+  --brass-ink: #5C4108;
+  --rust: #B54A2C;
+  --rust-dark: #953C22;
+  --emerald: #1F8F5A;
+  --emerald-dark: #17724A;
+  --amber: #D6A63D;
+  --amber-dark: #B58A2C;
+
+  --radius-s: 4px;
+  --radius-m: 10px;
+}
+
+/* ---------- type ---------- */
+body {
+  --bs-body-font-family: 'Schibsted Grotesk', system-ui, -apple-system, sans-serif;
+  --bs-body-bg: var(--bg);
+  --bs-body-color: var(--ink);
+  --bs-border-color: var(--line);
+  --bs-link-color-rgb: 168, 122, 31;
+  --bs-link-hover-color-rgb: 92, 65, 8;
+}
+
+h1, h2, h3, h4, h5, h6,
+.navbar-brand {
+  font-family: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.mono, .badge, .btn {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+/* ---------- buttons: Bootstrap hardcodes these per-variant, so each
+   variant needs its own override rather than a single root change ---------- */
+.btn {
+  --bs-btn-border-radius: var(--radius-s);
+  --bs-btn-font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  transition: transform .22s cubic-bezier(.34,1.56,.64,1), box-shadow .22s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover { transform: none; }
+}
+
+.btn-primary, .btn-dark {
+  --bs-btn-color: var(--brass-ink);
+  --bs-btn-bg: var(--brass);
+  --bs-btn-border-color: var(--brass);
+  --bs-btn-hover-color: var(--brass-ink);
+  --bs-btn-hover-bg: var(--brass-dark);
+  --bs-btn-hover-border-color: var(--brass-dark);
+  --bs-btn-active-color: var(--brass-ink);
+  --bs-btn-active-bg: var(--brass-dark);
+  --bs-btn-active-border-color: var(--brass-dark);
+  --bs-btn-disabled-bg: var(--brass);
+  --bs-btn-disabled-border-color: var(--brass);
+}
+.btn-dark:hover { box-shadow: 0 10px 20px -8px rgba(201,146,43,.55); }
+
+.btn-danger, .btn-outline-danger {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--rust);
+  --bs-btn-border-color: var(--rust);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--rust-dark);
+  --bs-btn-hover-border-color: var(--rust-dark);
+  --bs-btn-active-bg: var(--rust-dark);
+  --bs-btn-active-border-color: var(--rust-dark);
+}
+.btn-outline-danger {
+  --bs-btn-color: var(--rust);
+  --bs-btn-bg: transparent;
+  --bs-btn-hover-color: #fff;
+}
+
+.btn-success {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--emerald);
+  --bs-btn-border-color: var(--emerald);
+  --bs-btn-hover-bg: var(--emerald-dark);
+  --bs-btn-hover-border-color: var(--emerald-dark);
+  --bs-btn-active-bg: var(--emerald-dark);
+}
+
+.btn-warning {
+  --bs-btn-color: #2E2306;
+  --bs-btn-bg: var(--amber);
+  --bs-btn-border-color: var(--amber);
+  --bs-btn-hover-color: #2E2306;
+  --bs-btn-hover-bg: var(--amber-dark);
+  --bs-btn-hover-border-color: var(--amber-dark);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--ink);
+  --bs-btn-border-color: var(--line);
+  --bs-btn-hover-bg: var(--ink);
+  --bs-btn-hover-border-color: var(--ink);
+}
+
+/* ---------- badges / alerts (these DO read root --bs-*-rgb) ---------- */
+:root {
+  --bs-primary-rgb: 201, 146, 43;
+  --bs-dark-rgb: 27, 58, 43;
+  --bs-danger-rgb: 181, 74, 44;
+  --bs-success-rgb: 31, 143, 90;
+  --bs-warning-rgb: 214, 166, 61;
+  --bs-info-rgb: 70, 86, 76;
+}
+.badge, .btn { border-radius: var(--radius-s); }
+
+/* ---------- links & nav ---------- */
+a { color: var(--brass-dark); }
+a:hover { color: var(--brass-ink); }
+
+.nav-link {
+  position: relative;
+  font-weight: 600;
+}
+.nav-link::after {
+  content: "";
+  position: absolute; left: 0; bottom: 2px; height: 2px; width: 100%;
+  background: var(--brass);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .3s cubic-bezier(.16,.9,.25,1);
+}
+.nav-link:hover::after,
+.nav-link.router-link-active::after { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .nav-link::after { transition: none; }
+}
+
+/* ---------- cards ---------- */
+.card {
+  border-radius: var(--radius-m);
+  border-color: var(--line);
+  transition: transform .3s cubic-bezier(.16,.9,.25,1), box-shadow .3s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -12px rgba(20,36,28,.22);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card { transition: none; }
+  .card:hover { transform: none; }
+}
+
+.count-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .72rem;
+  letter-spacing: .04em;
+  background: color-mix(in srgb, var(--pine) 10%, transparent);
+  color: var(--pine);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: none;
+}
+
+/* ---------- filter sidebar ---------- */
+.ss-filter-card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 22px;
+}
+.ss-filter-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.ss-filter-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: .88rem;
+  color: var(--ink);
+  transition: background-color .15s ease, color .15s ease, padding-left .15s ease;
+}
+.ss-filter-link:hover { background: var(--bg); color: var(--brass-dark); padding-left: 12px; }
+.ss-size-chip {
+  border: 1.5px solid var(--line);
+  background: #fff;
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: .8rem;
+  font-weight: 600;
+  transition: border-color .18s ease, color .18s ease, transform .18s cubic-bezier(.34,1.56,.64,1);
+}
+.ss-size-chip:hover { border-color: var(--brass); color: var(--brass-dark); transform: translateY(-2px); }
+.ss-color-swatch {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--line);
+  cursor: pointer;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s ease;
+}
+.ss-color-swatch:hover { transform: scale(1.15); box-shadow: 0 0 0 2px var(--brass); }
+
+/* ---------- auth cards ---------- */
+.ss-auth-card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  padding: 36px;
+  box-shadow: 0 1px 2px rgba(20,36,28,.06), 0 8px 24px rgba(20,36,28,.08);
+}
+
+/* ---------- generic content card (profile, checkout, favorites) ---------- */
+.ss-content-card {
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-m);
+  overflow: hidden;
+}
+.ss-content-card .ss-card-head {
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--line);
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.05rem;
+}
+.ss-content-card .ss-card-body { padding: 24px; }
+.ss-page-title {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* ---------- entrance animation, used sparingly on page-level headers ---------- */
+@keyframes ss-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.ss-reveal { animation: ss-rise .6s cubic-bezier(.16,.9,.25,1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .ss-reveal { animation: none; }
+}

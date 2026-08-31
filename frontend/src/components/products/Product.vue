@@ -38,43 +38,46 @@
                         {{ productDetailsStore.product.reviews.length > 1 ? "reviews" : "review"}}
                     </small>
                 </div>
-                <h5 class="my-3">
+                <h1 class="ss-product-name">
                     {{ productDetailsStore.product?.name }}
-                </h5>
-                <div class="d-inline-flex">
+                </h1>
+                <div class="d-inline-flex gap-2 mb-2">
                     <span class="badge text-bg-light">
                         <i class="bi bi-tag"></i>
                         {{ productDetailsStore.product?.category.name }}
                     </span>
-                    <span class="badge text-bg-light ms-3">
+                    <span class="badge text-bg-light">
                         <i class="bi bi-c-circle"></i>
                         {{ productDetailsStore.product?.brand.name }}
                     </span>
-                </div>
-                <p class="my-3" v-dompurify-html="productDetailsStore.product?.desc"></p>
-                <div class="mb-2">
-                    <span class="h5">
-                        ${{ productDetailsStore.product?.price }}
+                    <span class="badge" :class="productDetailsStore.product?.status ? 'bg-success' : 'bg-warning'">
+                        {{ productDetailsStore.product?.status ? 'In Stock' : 'Out of Stock' }}
                     </span>
                 </div>
-                <div class="d-flex flex-wrap justify-content-start">
-                    <div 
-                        :class="`${data.chosenColor?.id === color.id ? 'border border-light-subtle shadow-sm border-2 rounded' : ''}  mb-1 me-1`" 
+                <p class="my-3 text-muted" v-dompurify-html="productDetailsStore.product?.desc"></p>
+                <div class="mb-3 ss-product-price mono">
+                    ${{ productDetailsStore.product?.price }}
+                </div>
+
+                <div class="ss-filter-title">Color</div>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <div
+                        class="ss-color-swatch"
+                        :class="{ 'ss-swatch-selected': data.chosenColor?.id === color.id }"
                         v-for="color in productDetailsStore.product?.colors"
                         :key="color.id"
-                        :style="{
-                            backgroundColor:color.name,
-                            width:'30px',
-                            height:'30px',
-                            cursor:'pointer'
-                        }"
+                        :style="{ backgroundColor: color.name }"
+                        :title="color.name"
                         @click="setChosenColor(color)"
                     >
                     </div>
                 </div>
-                <div class="d-flex flex-wrap justify-content-start align-items-center my-3">
-                    <button 
-                        :class="`${data.chosenSize?.id === size.id ? 'btn btn-danger mb-3 mx-1 rounded-0' : 'btn btn-sm btn-outline-secondary mb-3 mx-1'}`"
+
+                <div class="ss-filter-title">Size</div>
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <button
+                        class="ss-size-chip"
+                        :class="{ 'ss-chip-selected': data.chosenSize?.id === size.id }"
                         v-for="size in productDetailsStore.product?.sizes"
                         :key="size.id"
                         @click="setChosenSize(size)"
@@ -82,43 +85,32 @@
                         {{ size.name }}
                     </button>
                 </div>
-                <div>
-                    <span class="badge bg-success" v-if="productDetailsStore.product?.status">
-                        In Stock
-                    </span>
-                    <span class="badge bg-warning" v-else>
-                        Out Stock
-                    </span>
-                </div>
-                <div class="my-3 d-inline-flex">
-                    <div>
-                        <input type="number" 
-                            v-model="data.qty" 
-                            min="1"
-                            :max="productDetailsStore.product?.qty"
-                            class="form-control"
+
+                <div class="d-flex align-items-center gap-2 mt-4">
+                    <input type="number"
+                        v-model="data.qty"
+                        min="1"
+                        :max="productDetailsStore.product?.qty"
+                        class="form-control ss-qty-input"
+                    >
+                    <button class="btn btn-dark flex-grow-1"
+                        :disabled="!data.chosenColor || !data.chosenSize || !productDetailsStore.product?.status"
+                        @click="cartStore.addToCart({
+                            ref: makeUniqueId(10),
+                            product_id: productDetailsStore.product?.id,
+                            name: productDetailsStore.product?.name,
+                            slug: productDetailsStore.product?.slug,
+                            qty: data.qty,
+                            price: productDetailsStore.product?.price,
+                            color: data.chosenColor?.name,
+                            size: data.chosenSize?.name,
+                            maxQty: productDetailsStore.product?.qty,
+                            image: productDetailsStore.product?.thumbnail,
+                            coupon_id: null,
+                        })"
                         >
-                    </div>
-                    <div class="ms-2">
-                        <button class="btn btn-danger btn-block"
-                            :disabled="!data.chosenColor || !data.chosenSize || !productDetailsStore.product?.status"
-                            @click="cartStore.addToCart({
-                                ref: makeUniqueId(10),
-                                product_id: productDetailsStore.product?.id,
-                                name: productDetailsStore.product?.name,
-                                slug: productDetailsStore.product?.slug,
-                                qty: data.qty,
-                                price: productDetailsStore.product?.price,
-                                color: data.chosenColor?.name,
-                                size: data.chosenSize?.name,
-                                maxQty: productDetailsStore.product?.qty,
-                                image: productDetailsStore.product?.thumbnail,
-                                coupon_id: null,
-                            })"
-                            >
-                            <i class="bi bi-cart-plus"></i> Add to cart
-                        </button>
-                    </div>
+                        <i class="bi bi-cart-plus"></i> Add to Cart
+                    </button>
                 </div>
             </div>
         </div>
@@ -188,4 +180,29 @@
 </script>
 
 <style scoped>
+.ss-product-name {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin: 12px 0;
+}
+.ss-product-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--rust, #B54A2C);
+}
+.ss-swatch-selected {
+    box-shadow: 0 0 0 2px var(--brass, #C9922B) !important;
+    transform: scale(1.1);
+}
+.ss-chip-selected {
+    background: var(--pine, #1B3A2B) !important;
+    border-color: var(--pine, #1B3A2B) !important;
+    color: #EEF0E8 !important;
+}
+.ss-qty-input {
+    max-width: 90px;
+    text-align: center;
+}
 </style>

@@ -1,12 +1,12 @@
 <template>
     <div class="row mb-3">
         <div class="col-md-12">
-            <div class="d-flex">
-                <input type="text" 
+            <div class="d-flex gap-2">
+                <input type="text"
                     v-model="data.coupon.name"
-                    placeholder="Enter a code promo"
-                    class="form-control rounded-0">
-                <button class="btn btn-primary rounded-0"
+                    placeholder="Enter a promo code"
+                    class="form-control">
+                <button class="btn btn-dark"
                     @click="applyCoupon"
                     :disabled="!data.coupon.name"
                 >

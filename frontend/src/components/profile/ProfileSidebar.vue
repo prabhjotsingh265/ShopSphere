@@ -4,49 +4,49 @@
         <Spinner :store="authStore" />
         <!-- render the form validation errors -->
         <RenderValidationErrors :formValidationErrors="authStore.validationErrors" />
-        <div class="card p-2">
-            <div class="d-flex flex-column justify-content-center align-items-center">
-                <img 
-                    :src="authStore.user?.profile_image" 
-                    :alt="authStore.user?.name" 
-                    width="150"
-                    height="150"
-                    class="rounded-circle"    
+        <div class="ss-content-card">
+            <div class="d-flex flex-column align-items-center p-4">
+                <img
+                    :src="authStore.user?.profile_image"
+                    :alt="authStore.user?.name"
+                    width="130"
+                    height="130"
+                    class="rounded-circle ss-profile-avatar"
                 >
-                <div class="input-group my-3">
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Choose file</label>
+                <div class="w-100 mt-3">
+                    <label for="image" class="form-label">Update photo</label>
+                    <div class="d-flex gap-2">
                         <input
                             type="file"
-                            class="form-control"
+                            class="form-control form-control-sm"
                             name="image"
                             id="image"
                             @change="handleFileInputChange"
                             :key="data.fileInputKey"
                         />
+                        <button
+                            @click="updateUserProfileImage"
+                            type="submit"
+                            class="btn btn-sm btn-dark"
+                        >
+                            <i class="bi bi-check2"></i>
+                        </button>
                     </div>
-                    <button
-                        @click="updateUserProfileImage"
-                        type="submit"
-                        class="btn btn-sm btn-dark"
-                    >
-                        Submit
-                    </button>
                 </div>
-                <ul class="list-group w-100 text-center mt-2">
-                    <li class="list-group-item">
-                        <i class="bi bi-person"></i> {{ authStore.user?.name }}
-                    </li>
-                    <li class="list-group-item">
-                        <i class="bi bi-envelope-at-fill"></i> {{ authStore.user?.email }}
-                    </li>
-                    <li class="list-group-item">
-                        <router-link to="/user/orders" class="text-decoration-none text-dark">
-                            <i class="bi bi-bag-check-fill"></i> Orders
-                        </router-link>
-                    </li>
-                </ul>
             </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="bi bi-person text-muted me-2"></i> {{ authStore.user?.name }}
+                </li>
+                <li class="list-group-item">
+                    <i class="bi bi-envelope-at-fill text-muted me-2"></i> {{ authStore.user?.email }}
+                </li>
+                <li class="list-group-item">
+                    <router-link to="/user/orders" class="text-decoration-none" style="color: var(--brass-dark)">
+                        <i class="bi bi-bag-check-fill me-2"></i> Orders
+                    </router-link>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -59,14 +59,14 @@
     import { useAuthStore } from "../../stores/useAuthStore"
     import Spinner from "../layouts/Spinner.vue"
     import RenderValidationErrors from "../layouts/RenderValidationErrors.vue"
-    
+
     //define the store
     const authStore = useAuthStore()
 
-    //define the toast 
+    //define the toast
     const toast = useToast()
 
-    //define the data 
+    //define the data
     const data = reactive({
         image: null,
         fileInputKey: 0
@@ -117,4 +117,9 @@
 </script>
 
 <style scoped>
+.ss-profile-avatar {
+    object-fit: cover;
+    border: 3px solid var(--bg, #EEF0E8);
+    box-shadow: 0 0 0 2px var(--brass, #C9922B);
+}
 </style>

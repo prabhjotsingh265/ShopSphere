@@ -1,17 +1,13 @@
 <template>
-  <div class="mb-3">
-    <h6>Colors</h6>
-    <div class="d-flex flex-wrap justify-content-start">
-        <div class="border border-light-subtle shadow-sm border-2 rounded mb-1 me-1" 
+  <div class="mb-4">
+    <div class="ss-filter-title">Colors</div>
+    <div class="d-flex flex-wrap gap-2">
+        <div class="ss-color-swatch"
           v-for="color in productsStore.colors"
           :key="color.id"
           @click="productsStore.filterProducts('color',color.id)"
-          :style="{
-            backgroundColor:color.name,
-            width:'30px',
-            height:'30px',
-            cursor:'pointer'
-          }"
+          :title="color.name"
+          :style="{ backgroundColor: color.name }"
           >
         </div>
     </div>
