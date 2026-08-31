@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->group(function() {
     });
     Route::post('user/logout',[UserController::class,'logout']);
     Route::put('user/update/profile',[UserController::class,'UpdateUserProfile']);
+    Route::put('user/update/password',[UserController::class,'updatePassword']);
+    Route::delete('user/delete',[UserController::class,'deleteAccount']);
     //coupon routes
     Route::post('apply/coupon',[CouponController::class,'applyCoupon']);
     //order routes

@@ -10,12 +10,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'profile_image'])]
 #[Hidden(['password', 'remember_token'])]
 class Admin extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
+
+    protected $appends = [
+        'image_path'
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -28,5 +32,15 @@ class Admin extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function getImagePathAttribute()
+    {
+        if($this->profile_image)
+        {
+            return asset($this->profile_image);
+        }else {
+            return "https://cdn.pixabay.com/photo/2017/11/10/05/48/user-2935527_1280.png";
+        }
     }
 }

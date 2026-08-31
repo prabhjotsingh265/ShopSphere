@@ -1,87 +1,98 @@
 <template>
-    <div class="col-md-8">
-        <div class="ss-content-card">
-            <div class="ss-card-head">
-                {{ updatingProfile ? "User Details" : "Billing Details"}}
-            </div>
-            <div class="ss-card-body">
-                <form @submit.prevent="updateUserInfos">
-                    <div class="mb-3">
-                        <label for="phone_number" class="form-label">Phone Number*</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="data.userCurrentInfo.phone_number"
-                            name="phone_number"
-                            id="phone_number"
-                            :required="true"
-                            aria-describedby="helpId"
-                            placeholder="Phone Number*"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="address" class="form-label">Address*</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="data.userCurrentInfo.address"
-                            name="address"
-                            id="address"
-                            :required="true"
-                            aria-describedby="helpId"
-                            placeholder="Address*"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="zip_code" class="form-label">Zip Code*</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="data.userCurrentInfo.zip_code"
-                            name="zip_code"
-                            id="zip_code"
-                            :required="true"
-                            aria-describedby="helpId"
-                            placeholder="Zip Code*"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="city" class="form-label">City*</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="data.userCurrentInfo.city"
-                            name="city"
-                            id="city"
-                            :required="true"
-                            aria-describedby="helpId"
-                            placeholder="City*"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="country" class="form-label">Country*</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            v-model="data.userCurrentInfo.country"
-                            name="country"
-                            id="country"
-                            :required="true"
-                            aria-describedby="helpId"
-                            placeholder="Country*"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <button
-                            v-if="!authStore.user?.profile_completed || updatingProfile"
-                            type="submit"
-                            class="btn btn-dark"
-                        >
-                            Save Details
-                        </button>
-                    </div>
-                </form>
-            </div>
+    <div class="ss-content-card">
+        <div class="ss-card-head">
+            {{ updatingProfile ? "User Details" : "Billing Details"}}
+        </div>
+        <div class="ss-card-body">
+            <form @submit.prevent="updateUserInfos">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name*</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="data.userCurrentInfo.name"
+                        name="name"
+                        id="name"
+                        :required="true"
+                        aria-describedby="helpId"
+                        placeholder="Name*"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="phone_number" class="form-label">Phone Number*</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="data.userCurrentInfo.phone_number"
+                        name="phone_number"
+                        id="phone_number"
+                        :required="true"
+                        aria-describedby="helpId"
+                        placeholder="Phone Number*"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address*</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="data.userCurrentInfo.address"
+                        name="address"
+                        id="address"
+                        :required="true"
+                        aria-describedby="helpId"
+                        placeholder="Address*"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="zip_code" class="form-label">Zip Code*</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="data.userCurrentInfo.zip_code"
+                        name="zip_code"
+                        id="zip_code"
+                        :required="true"
+                        aria-describedby="helpId"
+                        placeholder="Zip Code*"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="city" class="form-label">City*</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="data.userCurrentInfo.city"
+                        name="city"
+                        id="city"
+                        :required="true"
+                        aria-describedby="helpId"
+                        placeholder="City*"
+                    />
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country*</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        v-model="data.userCurrentInfo.country"
+                        name="country"
+                        id="country"
+                        :required="true"
+                        aria-describedby="helpId"
+                        placeholder="Country*"
+                    />
+                </div>
+                <div class="mb-3">
+                    <button
+                        v-if="!authStore.user?.profile_completed || updatingProfile"
+                        type="submit"
+                        class="btn btn-dark"
+                    >
+                        Save Details
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
@@ -96,6 +107,7 @@
     //define the data object
     const data = reactive({
         userCurrentInfo: {
+            name: '',
             phone_number: '',
             address: '',
             city: '',
@@ -124,6 +136,7 @@
         authStore.isLoading = true
 
         const userData = {
+            name: data.userCurrentInfo.name,
             phone_number: data.userCurrentInfo.phone_number,
             city: data.userCurrentInfo.city,
             address: data.userCurrentInfo.address,

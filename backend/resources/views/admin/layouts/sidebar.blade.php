@@ -70,7 +70,7 @@
             <hr class="ss-sidebar-hr">
             <ul class="nav flex-column mb-auto px-2">
                 <li class="nav-item">
-                    <a href="#" class="nav-link ss-link ss-link-static">
+                    <a href="{{route('admin.profile.edit')}}" class="nav-link ss-link @if(request()->routeIs('admin.profile.edit')) ss-link-active @endif">
                         <i class="fas fa-user"></i>
                         {{ auth()->guard('admin')->user()->name }}
                     </a>

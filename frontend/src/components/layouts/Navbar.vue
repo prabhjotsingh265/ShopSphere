@@ -44,7 +44,7 @@
           </li>
           <li class="nav-item dropdown" v-if="authStore.isLoggedIn">
             <a class="nav-link ss-icon-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="bi bi-person-circle"></i>
+              <img class="ss-avatar" :src="authStore.user?.profile_image" alt="" />
               <span class="ss-icon-label d-lg-none">{{ authStore.user?.name }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end ss-dropdown">
@@ -185,6 +185,13 @@
   .ss-icon-link:hover { background: var(--bg, #EEF0E8); }
   .ss-icon-link::after { display: none !important; }
   .ss-icon-label { font-size: .95rem; font-weight: 600; }
+  .ss-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--line);
+  }
   .ss-badge {
     position: absolute;
     top: -2px;

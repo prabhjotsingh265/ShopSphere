@@ -94,7 +94,11 @@
     </script>
     <script>
         function handleImageInputChange(input,image) {
-            document.getElementById(input).addEventListener('change',function(){
+            //guard: these inputs only exist on a handful of pages (product/profile
+            //forms), but this script runs on every admin page via the shared layout
+            const inputEl = document.getElementById(input);
+            if(!inputEl) return;
+            inputEl.addEventListener('change',function(){
                 readUrl(this,image)
             });
         }
@@ -115,5 +119,6 @@
         handleImageInputChange('first_image','first_image_preview');
         handleImageInputChange('second_image','second_image_preview');
         handleImageInputChange('third_image','third_image_preview');
+        handleImageInputChange('profile_image','profile_image_preview');
     </script>
 </html>

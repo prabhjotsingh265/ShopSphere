@@ -19,6 +19,9 @@ Route::post('admin/auth',[AdminController::class,"auth"])->name("admin.auth");
 Route::prefix("admin")->middleware("admin")->group(function() {
     Route::get('dashboard',[AdminController::class,"index"])->name("admin.index");
     Route::post('logout',[AdminController::class,"logout"])->name("admin.logout");
+    //admin profile routes
+    Route::get('profile',[AdminController::class,"editProfile"])->name("admin.profile.edit");
+    Route::put('profile',[AdminController::class,"updateProfile"])->name("admin.profile.update");
     //categories routes
     Route::resource("categories",CategoryController::class,[
         'names' => [

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\AuthUserRequest;
+use App\Http\Requests\DeleteUserAccountRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserPasswordRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
@@ -78,6 +80,7 @@ class UserController extends Controller
             ]);
         }else {
             $request->user()->update([
+                'name' => $request->name,
                 'country' => $request->country,
                 'city' => $request->city,
                 'address' => $request->address,
@@ -91,5 +94,35 @@ class UserController extends Controller
                 'message' => 'Profile updated successfully'
             ]);
         }
+    }
+
+    public function updatePassword(UpdateUserPasswordRequest $request)
+    {
+        $request->user()->update([
+            'password' => $request->password
+        ]);
+
+        return response()->json([
+            'message' => 'Password updated successfully'
+        ]);
+    }
+
+    public function deleteAccount(DeleteUserAccountRequest $request)
+    {
+        $user = $request->user();
+
+        //remove the profile image if one was ever uploaded
+        if($user->profile_image && File::exists(public_path($user->profile_image))) {
+            File::delete(public_path($user->profile_image));
+        }
+
+        //revoke every access token before deleting - orders/reviews cascade via
+        //the foreign keys already set up on those tables
+        $user->tokens()->delete();
+        $user->delete();
+
+        return response()->json([
+            'message' => 'Your account has been deleted'
+        ]);
     }
 }
