@@ -1,2 +1,10 @@
 *
 !.gitignore
+
+# Seed/demo product images - committed so a fresh clone shows a populated
+# catalog immediately, without requiring anyone to manually download and
+# place images first. Real user-uploaded images in production would not
+# work this way, but this repo exists to be cloned and demoed.
+!images/
+!images/products/
+!images/products/*
