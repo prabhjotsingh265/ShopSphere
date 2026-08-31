@@ -108,6 +108,24 @@ h1, h2, h3, h4, h5, h6 {
   --bs-btn-hover-border-color: var(--ink);
 }
 
+/* ---------- pagination (used by DataTables' Bootstrap 5 integration) ---------- */
+.page-link {
+  color: var(--ink);
+  border-color: var(--line);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .8rem;
+}
+.page-link:hover { color: var(--brass-ink); background: var(--bg); border-color: var(--line); }
+.page-item.active .page-link {
+  background: var(--brass);
+  border-color: var(--brass);
+  color: var(--brass-ink);
+}
+.page-item.disabled .page-link { color: var(--ink-soft); }
+.dataTables_wrapper { margin-top: 8px; }
+.dataTables_wrapper .dataTables_filter input { margin-left: .5rem; }
+.dataTables_wrapper .dataTables_info { color: var(--ink-soft); font-size: .8rem; }
+
 /* ---------- cards / tables ---------- */
 .card {
   border-radius: var(--radius-m);
