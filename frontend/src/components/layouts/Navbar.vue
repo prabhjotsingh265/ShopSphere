@@ -18,10 +18,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link class="nav-link" aria-current="page" to="/">
-              Home
-            </router-link>
+          <li class="nav-item" v-for="category in productsStore.categories" :key="category.id">
+            <a class="nav-link" href="#" @click.prevent="shopCategory(category)">
+              {{ category.name }}
+            </a>
           </li>
         </ul>
         <ul class="navbar-nav align-items-lg-center gap-lg-1">
@@ -82,12 +82,14 @@
   import { useAuthStore } from "../../stores/useAuthStore"
   import { useCartStore } from "../../stores/useCartStore"
   import { useFavoritesStore } from "../../stores/useFavoritesStore"
+  import { useProductsStore } from "../../stores/useProductsStore"
   import Logo from "./Logo.vue"
 
   //define the cart store
   const cartStore = useCartStore()
   const authStore = useAuthStore()
   const favoritesStore = useFavoritesStore()
+  const productsStore = useProductsStore()
 
   //define the toast
   const toast = useToast()
@@ -110,6 +112,14 @@
     }
   }
 
+  //filter products by category from the navbar, navigating home first if needed
+  const shopCategory = (category) => {
+    if(router.currentRoute.value.path !== '/') {
+      router.push('/')
+    }
+    productsStore.filterProducts('category', category.slug)
+  }
+
   //fetch the currently logged in user
   //and check if the token is still valid
   const fetchCurrentUser = async () => {
@@ -127,8 +137,15 @@
     }
   }
 
-  //once the component is loaded we get the currently logged in user
-  onMounted(() => authStore.isLoggedIn && fetchCurrentUser())
+  //once the component is loaded we get the currently logged in user,
+  //and make sure categories are available even on pages other than Home
+  //(which is otherwise the only place that fetches them)
+  onMounted(() => {
+    authStore.isLoggedIn && fetchCurrentUser()
+    if(!productsStore.categories.length) {
+      productsStore.fetchAllProducts()
+    }
+  })
 </script>
 
 <style scoped>
