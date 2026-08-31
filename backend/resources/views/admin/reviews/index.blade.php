@@ -34,14 +34,14 @@
                         <tbody>
                             @foreach ($reviews as $key => $review)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>
                                         {{ $review->title }}
                                     </td>
                                     <td>
                                         {{ $review->body }}
                                     </td>
-                                    <td>{{ $review->rating }}</td>
+                                    <td class="mono">{{ $review->rating }}</td>
                                     <td>
                                         @if ($review->approved)
                                             <span class="badge bg-success">
@@ -62,7 +62,7 @@
                                             height="60"
                                         >
                                     </td>
-                                    <td>{{ $review->created_at }}</td>
+                                    <td class="mono">{{ $review->created_at }}</td>
                                     <td class="d-flex">
                                         @if ($review->approved)
                                             <a href="{{route('admin.reviews.update',['review' => $review->id,'status' => 0])}}" class="btn btn-sm btn-warning">

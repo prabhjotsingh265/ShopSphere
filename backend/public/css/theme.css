@@ -206,7 +206,8 @@ a:hover { color: var(--brass-ink); }
 /* ---------- card body / table polish ---------- */
 .ss-panel { border-radius: var(--radius-m); overflow: hidden; }
 .ss-panel .card-body { padding: 6px 20px 20px; }
-.table thead th {
+.table thead th,
+.table thead td {
   font-family: 'IBM Plex Mono', monospace;
   font-size: .68rem;
   text-transform: uppercase;
@@ -217,7 +218,16 @@ a:hover { color: var(--brass-ink); }
   padding-top: 14px;
   padding-bottom: 14px;
 }
-.table td { vertical-align: middle; padding-top: 12px; padding-bottom: 12px; }
+.table tbody td,
+.table tbody th {
+  font-family: 'Schibsted Grotesk', system-ui, -apple-system, sans-serif;
+  font-size: .85rem;
+  font-weight: 400;
+  color: var(--ink);
+  vertical-align: middle;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
 .table img.rounded { border: 1px solid var(--line); }
 
 /* ---------- dashboard stat cards ---------- */

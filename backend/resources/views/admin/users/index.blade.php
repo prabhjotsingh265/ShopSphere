@@ -31,7 +31,7 @@
                         <tbody>
                             @foreach ($users as $key => $user)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>
                                         {{ $user->name }}
                                     </td>
@@ -46,7 +46,7 @@
                                             height="60"
                                         >
                                     </td>
-                                    <td>{{ $user->created_at->diffForHumans() }}</td>
+                                    <td class="mono">{{ $user->created_at->diffForHumans() }}</td>
                                     <td class="d-flex">
                                         <a href="#" onclick="deleteItem({{$user->id}})" class="btn btn-sm btn-danger mx-1">
                                             <i class="fas fa-trash"></i>

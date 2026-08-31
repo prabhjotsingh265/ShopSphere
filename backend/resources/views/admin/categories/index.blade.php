@@ -22,18 +22,18 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <td>#</td>
-                                <td>Name</td>
-                                <td>Slug</td>
-                                <td></td>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($categories as $key => $category)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <td>{{ $category->slug }}</td>
+                                    <td class="mono">{{ $category->slug }}</td>
                                     <td>
                                         <a href="{{route('admin.categories.edit',$category->slug)}}" class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit"></i>

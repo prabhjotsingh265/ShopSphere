@@ -22,19 +22,19 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <td>#</td>
-                                <td>Name</td>
-                                <td>Discount</td>
-                                <td>Validity</td>
-                                <td></td>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Discount</th>
+                                <th>Validity</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($coupons as $key => $coupon)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>{{ $coupon->name }}</td>
-                                    <td>{{ $coupon->discount }}%</td>
+                                    <td class="mono">{{ $coupon->discount }}%</td>
                                     <td>
                                         @if ($coupon->checkIfValid())
                                             <span class="badge bg-success">

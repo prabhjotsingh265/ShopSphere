@@ -22,15 +22,15 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <td>#</td>
-                                <td>Name</td>
-                                <td></td>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($sizes as $key => $size)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>{{ $size->name }}</td>
                                     <td>
                                         <a href="{{route('admin.sizes.edit',$size->id)}}" class="btn btn-sm btn-warning">

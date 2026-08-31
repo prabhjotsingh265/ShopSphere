@@ -35,7 +35,7 @@
                         <tbody>
                             @foreach ($orders as $key => $order)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>
                                         <span class="d-flex flex-column">
                                             @foreach ($order->products as $product)
@@ -62,9 +62,9 @@
                                             </span>
                                         @endif
                                     </td>
-                                    <td>{{ $order->qty }}</td>
+                                    <td class="mono">{{ $order->qty }}</td>
                                     <td class="mono">${{ $order->total }}</td>
-                                    <td>{{ $order->created_at }}</td>
+                                    <td class="mono">{{ $order->created_at }}</td>
                                     <td>
                                         @if ($order->delivered_at)
                                             <span class="badge bg-success">

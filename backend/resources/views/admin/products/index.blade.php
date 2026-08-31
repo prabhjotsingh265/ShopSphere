@@ -23,26 +23,26 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <td>#</td>
-                                <td>Name</td>
-                                <td>Slug</td>
-                                <td>Category</td>
-                                <td>Brand</td>
-                                <td>Colors</td>
-                                <td>Sizes</td>
-                                <td>Qty</td>
-                                <td>Price</td>
-                                <td>Images</td>
-                                <td>Status</td>
-                                <td></td>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th>Category</th>
+                                <th>Brand</th>
+                                <th>Colors</th>
+                                <th>Sizes</th>
+                                <th>Qty</th>
+                                <th>Price</th>
+                                <th>Images</th>
+                                <th>Status</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($products as $key => $product)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>{{ $product->name }}</td>
-                                    <td>{{ $product->slug }}</td>
+                                    <td class="mono">{{ $product->slug }}</td>
                                     <td>{{ $product->category->name }}</td>
                                     <td>{{ $product->brand->name }}</td>
                                     <td>
@@ -59,7 +59,7 @@
                                             </span>
                                         @endforeach
                                     </td>
-                                    <td>{{ $product->qty }}</td>
+                                    <td class="mono">{{ $product->qty }}</td>
                                     <td class="mono">${{ number_format($product->price, 2) }}</td>
                                     <td>
                                         <img src="{{asset($product->thumbnail)}}"

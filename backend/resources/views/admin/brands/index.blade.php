@@ -22,18 +22,18 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <td>#</td>
-                                <td>Name</td>
-                                <td>Slug</td>
-                                <td></td>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Slug</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($brands as $key => $brand)
                                 <tr>
-                                    <td>{{ $key += 1 }}</td>
+                                    <td class="mono">{{ $key += 1 }}</td>
                                     <td>{{ $brand->name }}</td>
-                                    <td>{{ $brand->slug }}</td>
+                                    <td class="mono">{{ $brand->slug }}</td>
                                     <td>
                                         <a href="{{route('admin.brands.edit',$brand->slug)}}" class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit"></i>
